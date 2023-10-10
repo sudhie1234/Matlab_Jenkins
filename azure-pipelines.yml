@@ -1,7 +1,7 @@
 strategy:
   matrix:
     linux:
-      imageName:
+      imageName:'Windows 10'
 
 pool:
   vmImage: $(imageName)
