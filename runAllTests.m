@@ -7,7 +7,7 @@ import matlab.unittest.plugins.codecoverage.CoverageReport;
 import matlab.unittest.plugins.TAPPlugin;
 import matlab.unittest.plugins.ToFile;
 
-addpath(genpath('src'));
+addpath(genpath('Test_files'));
 
 suite = testsuite(pwd, 'IncludeSubfolders', true);
 
