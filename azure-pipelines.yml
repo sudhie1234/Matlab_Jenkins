@@ -1,0 +1,26 @@
+strategy:
+  matrix:
+    linux:
+      imageName:
+
+pool:
+  vmImage: $(imageName)
+steps:
+  #- powershell: Write-Host '##vso[task.prependpath]E:\Matlab2023\bin'
+  - task: InstallMATLAB@0
+  - task: RunMATLABTests@0
+    inputs:
+      testResultsJUnit: 'test-results/results.xml'
+      codeCoverageCobertura: 'code-coverage/coverage.xml'
+      sourceFolder: Test_files;
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFiles: 'test-results/results.xml'
+  - task: PublishCodeCoverageResults@1
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: 'code-coverage/coverage.xml'
+  - task: RunMATLABCommand@0
+    inputs:
+      command: ver
