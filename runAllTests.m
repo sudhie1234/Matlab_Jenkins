@@ -9,7 +9,13 @@ import matlab.unittest.plugins.ToFile;
 
 addpath(genpath('Test_files'));
 
-suite = testsuite(pwd, 'IncludeSubfolders', true);
+%suite = testsuite(pwd, 'IncludeSubfolders', true);
+
+proj = openProject("Matlab_Jenkins.prj"); 
+sltestmgr; 
+testFile = sltest.testmanager.load('Matlab_Jenkins_Automated.mldatx'); 
+testSuite = getTestSuiteByName(testFile,'Test Scenarios'); 
+testCase = getTestCaseByName(testSuite,'Test_Case1'); 
 
 [~,~] = mkdir('matlabTestArtifacts');
 
@@ -20,7 +26,7 @@ runner.addPlugin(XMLPlugin.producingJUnitFormat('matlabTestArtifacts/junittestre
 runner.addPlugin(CodeCoveragePlugin.forFolder({'Test_files'}, 'IncludingSubfolders', true, 'Producing', CoverageReport('covReport', ...
    'MainFile','index.html')));
 
-results = runner.run(suite);
+results = runner.run(testCase);
 
 % Generate Zip files
 % zip('covReport.zip','covReport');
